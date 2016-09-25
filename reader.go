@@ -41,7 +41,6 @@ func (r *Reader) Read(buf []byte) (n int, err error) {
 		r.wIndex += n
 		r.wIndex %= len(r.decbuf)
 		if r.wIndex > 0 {
-			r.flush = true
 			return // buf not enough
 		}
 		r.blkId++
