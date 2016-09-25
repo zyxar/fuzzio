@@ -3,12 +3,9 @@ package fuzzio
 import (
 	"bytes"
 	"testing"
-
-	"github.com/zyxar/fuzzio/xtea_le"
 )
 
 func TestHead(t *testing.T) {
-	cipher, _ := xtea_le.NewCipher(key)
 	var head = Header{length: 0x08}
 	var buf [8]byte
 	head.encode(buf[:], cipher)
