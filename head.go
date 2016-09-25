@@ -5,21 +5,18 @@ import (
 	"errors"
 )
 
-type Header struct {
-	length uint32
-	done   bool
-}
+type Header uint32
 
-func (h *Header) encode(buf []byte, cipher Cipher) {
+func (h Header) encode(buf []byte, cipher Cipher) {
 	var b [8]byte
 	binary.LittleEndian.PutUint32(b[:4], magicFuzz)
-	binary.LittleEndian.PutUint32(b[4:], h.length)
+	binary.LittleEndian.PutUint32(b[4:], uint32(h))
 	cipher.Encrypt(buf, b[:])
 	return
 }
 
-func (h *Header) ContentLength() uint32 {
-	return h.length
+func (h Header) ContentLength() uint32 {
+	return uint32(h)
 }
 
 func DecodeHeader(buf []byte, cipher Cipher, h *Header) error {
@@ -32,8 +29,7 @@ func DecodeHeader(buf []byte, cipher Cipher, h *Header) error {
 	if magic != magicFuzz {
 		return ErrInvalidMagic
 	}
-	h.length = binary.LittleEndian.Uint32(b[4:])
-	h.done = true
+	*h = Header(binary.LittleEndian.Uint32(b[4:]))
 	return nil
 }
 
