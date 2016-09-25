@@ -11,12 +11,6 @@ func TestRead(t *testing.T) {
 		0x4A, 0x41, 0x5B, 0x8A, 0x56, 0xCF, 0xA7, 0x72,
 		0x86, 0xF0, 0x25, 0x75, 0x34, 0x13, 0x25, 0x98, 0x00, // trailling one byte
 	}
-	var text = []byte{
-		'H', 'E', 'L', 'L',
-		'O', ' ', 'W', 'O',
-		'R', 'L', 'D', '!',
-		0x56, 0xCF, 0xA7, 0x72,
-	}
 	for i := 1; i < 32; i++ {
 		for j := uint32(1); j < 17; j++ {
 			rd := NewReader(bytes.NewReader(input), j, cipher)

@@ -18,6 +18,10 @@ func (h *Header) encode(buf []byte, cipher Cipher) {
 	return
 }
 
+func (h *Header) ContentLength() uint32 {
+	return h.length
+}
+
 func DecodeHeader(buf []byte, cipher Cipher, h *Header) error {
 	if len(buf) < 8 {
 		return ErrInvalidHeaderLen
